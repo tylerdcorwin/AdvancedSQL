@@ -1,0 +1,70 @@
+CREATE TABLE dbo.Items
+(	Item_id BIGINT NOT NULL,
+	Desc VARCHAR(70) NOT NULL,
+	Type CHAR(1) NOT NULL,
+	Brand VARCHAR(15) NULL,
+	Style VARCHAR(15) NULL,
+	Color VARCHAR(15) NULL,
+	Fretboard VARCHAR(15) NULL,
+	Pickups VARCHAR(25) NULL,
+	Strings VARCHAR INT NULL,
+	Price MONEY, NOT NULL)
+GO
+
+CREATE TABLE dbo.Players
+(	Player_id BIGINT NOT NULL,
+	Player_Name VARCHAR(50) NOT NULL,
+	Player_Age INT NOT NULL,
+	Player_Location VARCHAR(75) NOT NULL,
+	Player_Style VARCHAR(35) NOT NULL)
+GO
+
+
+CREATE TABLE dbo.Orders
+(	Order_id BIGINT NOT NULL,
+	Item_id BIGINT NOT NULL,
+	Item_Quantity INT NOT NULL,
+	Plyer_id INT NOT NULL)
+GO
+
+CREATE TABLE dbo.Online_Account
+(	Users_id BIGINT NOT NULL,
+	Player_id BIGINT NOT NULL,
+	User_Email VARCHAR(75) NOT NULL,
+	User_Password VARCHAR(25) NOT NULL,
+	User_Description VARCHAR(200) NULL)
+GO
+
+CREATE TABLE dbo.Credit_Cards
+(	Users_id BIGINT NOT NULL,
+	Card_Type VARCHAR(15) NOT NULL,
+	Card_Number BIGINT NOT NULL,
+	Card_Experation_Date DATE NOT NULL,
+	Card_Security_Code BIGINT NOT NULL,
+	Player_Location VARCHAR(75) NOT NULL)
+GO
+
+ALTER TABLE dbo.Items
+ADD CONSTRAINT PK_Item_id PRIMARY KEY CLUSTERED (Item_id); 
+GO
+
+ALTER TABLE dbo.Online_Account
+ADD CONSTRAINT PK_Users_id PRIMARY KEY CLUSTERED (Users_id); 
+GO
+
+ALTER TABLE dbo.Online_Account
+ADD CONSTRAINT FK_Player_id FOREIGN KEY (Player_id); 
+REFERENCES dbo.Players(Player_id);
+GO
+
+ALTER TABLE dbo.Orders
+ADD CONSTRAINT PK_Order_id PRIMARY KEY (Order_id, Item_id);
+GO
+
+ALTER TABLE dbo.Players
+ADD CONSTRAINT PK_Player_id PRIMARY KEY (Player_id);
+GO
+
+CREATE INDEX IX_Item_Type
+    ON dbo.Items ([Type]);
+GO
