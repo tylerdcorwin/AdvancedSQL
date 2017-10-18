@@ -1,0 +1,116 @@
+//dbo.Orders
+SELECT Brand 
+FROM dbo.Orders JOIN dbo.Items ON dbo.Orders.Item_id = dbo.Items.Item_id
+WHERE Order_id = 3;
+GO
+
+SELECT Order_id 
+FROM dbo.Orders JOIN dbo.Items ON dbo.Orders.Item_id = dbo.Items.Item_id
+WHERE [Desc] = 'Strings';
+GO
+
+SELECT * 
+FROM dbo.Orders JOIN dbo.Items ON dbo.Orders.Item_id = dbo.Items.Item_id
+WHERE Price < 100;
+GO
+
+
+//dbo.Items
+SELECT *
+FROM dbo.Items
+WHERE Fretboard = 'Maple';
+GO
+
+SELECT [Desc]
+FROM dbo.Items
+WHERE Item_id = 3;
+GO
+
+SELECT *
+FROM dbo.Items
+WHERE Brand = 'Fender';
+GO
+
+
+//dbo.Online_Account
+SELECT User_Email
+FROM dbo.Online_Account
+WHERE Users_id < 20;
+GO
+
+SELECT User_Email, User_Description
+FROM dbo.Online_Account
+WHERE Users_id < 5;
+GO
+
+SELECT *
+FROM dbo.Online_Account JOIN dbo.Players ON dbo.Online_Account.Player_id = dbo.Players.Player_id
+WHERE Users_id < 11;
+GO
+
+//dbo.Players
+SELECT *
+FROM dbo.Players JOIN dbo.Online_Account ON dbo.Online_Account.Player_id = dbo.Players.Player_id
+WHERE User_Description LIKE '%Legend';
+GO
+
+SELECT *
+FROM dbo.Players JOIN dbo.Orders ON dbo.Orders.Player_id = dbo.Players.Player_id
+WHERE Item_id = 10;
+GO
+
+SELECT Player_Name, Player_Style
+FROM dbo.Players JOIN dbo.Orders ON dbo.Orders.Player_id = dbo.Players.Player_id
+WHERE Player_Age < 55;
+GO
+
+
+//dbo.Credit_Cards
+SELECT Card_Type
+FROM dbo.Credit_Cards JOIN dbo.Players ON dbo.Credit_Cards.Player_Location = dbo.Players.Player_Location
+WHERE Player_id = 4;
+GO
+
+SELECT *
+FROM dbo.Credit_Cards JOIN dbo.Players ON dbo.Credit_Cards.Player_Location = dbo.Players.Player_Location
+WHERE Player_id = 2;
+GO
+
+SELECT Player_Name
+FROM dbo.Credit_Cards JOIN dbo.Players ON dbo.Credit_Cards.Player_Location = dbo.Players.Player_Location
+WHERE Card_Experation_Date < '1/11/2019';
+GO
+
+
+//INDEX Statements
+CREATE INDEX IX_Item_Type
+    ON dbo.Items ([Type]);
+GO
+
+CREATE INDEX IX_Player_Pid
+    ON dbo.Players (Player_id);
+GO
+
+CREATE INDEX IX_Orders_Pid
+    ON dbo.Orders (Player_id);
+GO
+
+CREATE INDEX IX_Online_Pid
+    ON dbo.Online_Account (Player_id);
+GO
+
+CREATE INDEX IX_Online_Uid
+    ON dbo.Online_Account (Users_id);
+GO
+
+CREATE INDEX IX_CreditCards_Uid
+    ON dbo.Credit_Cards (Users_id);
+GO
+
+CREATE INDEX IX_Items_Brand
+    ON dbo.Items (Brand);
+GO
+
+CREATE INDEX IX_Items_Price
+    ON dbo.Items (Price);
+GO
